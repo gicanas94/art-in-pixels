@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import styled, { ServerStyleSheet } from 'styled-components';
 
 import * as CONSTANTS from './constants';
-import { Button, ColorPicker, Grid, Input } from './components';
+import { Button, ColorPicker, Grid, Hr, Input } from './components';
 
 const StyledOnlyLaptop = styled.div`
   background-color: #141322;
@@ -48,9 +48,7 @@ const StyledMenu = styled.div`
   }
 `;
 
-const StyledWelcome = styled.div`
-  margin-bottom: 20px;
-`;
+const StyledWelcome = styled.div``;
 
 const StyledWelcomeTitle = styled.h1`
   font-size: 1.2em;
@@ -60,6 +58,11 @@ const StyledWelcomeTitle = styled.h1`
 const StyledWelcomeInfo = styled.div`
   font-size: 0.7em;
   line-height: 1.3;
+  margin-bottom: 10px;
+`;
+
+const StyledGitHubLink = styled.a`
+  font-size: 0.7em;
 `;
 
 const StyledLabel = styled.div`
@@ -72,9 +75,7 @@ const StyledSubLabel = styled.div`
   margin-bottom: 3px;
 `;
 
-const StyledNewGridForm = styled.form`
-  margin-bottom: 20px;
-`;
+const StyledNewGridForm = styled.form``;
 
 const StyledNewGridFormInputs = styled.div`
   display: grid;
@@ -88,19 +89,17 @@ const StyledDrawingColors = styled.div`
   margin-bottom: 20px;
 `;
 
-const StyledGridColors = styled.div`
-  margin-bottom: 20px;
-`;
+const StyledGridColors = styled.div``;
 
 const StyledColors = styled.div`
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 10px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 `;
 
 const StyledExport = styled.div`
   button:not(:last-of-type) {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -214,10 +213,17 @@ const App = () => {
       pixelMapping: createNewPixelMapping(newGridFormValues),
     };
 
-    setGrid(newGrid);
-    setMode(CONSTANTS.MODES.DRAW);
-    localStorage.setItem('grid', JSON.stringify(newGrid));
-    document.getElementById('reset-transform-button').click();
+    if (
+      // eslint-disable-next-line no-alert
+      window.confirm(
+        'The current grid will be cleaned, are you sure you want to continue?',
+      )
+    ) {
+      setGrid(newGrid);
+      setMode(CONSTANTS.MODES.DRAW);
+      localStorage.setItem('grid', JSON.stringify(newGrid));
+      document.getElementById('reset-transform-button').click();
+    }
   };
 
   const handleNewGridFormChange = (field, value) => {
@@ -296,7 +302,16 @@ const App = () => {
               automatically saved in your browser storage with every change you
               make.
             </StyledWelcomeInfo>
+
+            <StyledGitHubLink
+              href="https://github.com/gicanas94/art-in-pixels/"
+              target="_blank"
+            >
+              View on GitHub
+            </StyledGitHubLink>
           </StyledWelcome>
+
+          <Hr margin="10px 0" />
 
           {/* New grid form */}
           <StyledNewGridForm onSubmit={handleNewGridFormSubmit}>
@@ -360,6 +375,8 @@ const App = () => {
             </Button>
           </StyledNewGridForm>
 
+          <Hr margin="10px 0" />
+
           {/* Drawing colors */}
           <StyledDrawingColors>
             <StyledLabel>Drawing colors</StyledLabel>
@@ -411,6 +428,8 @@ const App = () => {
               </div>
             </StyledColors>
           </StyledGridColors>
+
+          <Hr margin="10px 0" />
 
           {/* Export */}
           <StyledExport>

@@ -208,7 +208,7 @@ const Grid = ({
               </ActionButton>
 
               <ActionButton
-                label="Show/Hide grid"
+                label={`${gridIsVisible ? 'Hide' : 'Show'} grid`}
                 onClick={() => setGridIsVisible(!gridIsVisible)}
                 selectable
                 selected={gridIsVisible}

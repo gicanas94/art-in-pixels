@@ -22,6 +22,10 @@ export default createGlobalStyle`
     margin: auto;
   }
 
+  a {
+    color: #fad6fa;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-size: 1em;
